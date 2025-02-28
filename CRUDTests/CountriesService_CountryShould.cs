@@ -5,6 +5,13 @@ namespace CRUDTests
 {
     public class CountriesService_CountryShould
     {
+        private readonly CountriesService _countriesService;
+
+        public CountriesService_CountryShould()
+        {
+            _countriesService = new CountriesService();
+        }
+
         #region AddCountry
         [Fact]
         public void Add_Country_Return_CorrectProperties()
@@ -12,10 +19,9 @@ namespace CRUDTests
             //Arange
             string countryName = "New Zealand";
             CountryAddRequest countryAddRequest = new() { Name = countryName };
-            CountriesService countriesService = new();
 
             //Act
-            CountryResponse countryResponse = countriesService.AddCountry(countryAddRequest);
+            CountryResponse countryResponse = _countriesService.AddCountry(countryAddRequest);
 
             //Assert
             Assert.True(countryResponse.Name == countryName);
@@ -27,10 +33,9 @@ namespace CRUDTests
         {
             //Arange
             CountryAddRequest countryRequest = null;
-            CountriesService countriesService = new CountriesService();
 
             //Act
-            Action actual = () => countriesService.AddCountry(countryRequest);
+            Action actual = () => _countriesService.AddCountry(countryRequest);
 
             //Assert
             Assert.Throws<ArgumentNullException>(actual);
@@ -39,12 +44,8 @@ namespace CRUDTests
         [Fact]
         public void Add_CountryRequestWithNoName_Throw_ArgumentException()
         {
-            //Arange
-            CountryAddRequest countryRequest = new();
-            CountriesService countriesService = new CountriesService();
-
             //Act
-            Action actual = () => countriesService.AddCountry(countryRequest);
+            Action actual = () => _countriesService.AddCountry(new CountryAddRequest());
 
             //Assert
             Assert.Throws<ArgumentException>(actual);
@@ -56,13 +57,11 @@ namespace CRUDTests
             //Arange
             string countryName = "Egypt";
             CountryAddRequest countryRequest = new() { Name = countryName };
-            CountryAddRequest countryRequest2 = new() { Name = countryName };
-
-            CountriesService countriesService = new CountriesService();
+            CountryAddRequest actualCountryRequest = new() { Name = countryName };
 
             //Act
-            var response = countriesService.AddCountry(countryRequest);
-            Action actual = () => countriesService.AddCountry(countryRequest2);
+            _countriesService.AddCountry(countryRequest);
+            Action actual = () => _countriesService.AddCountry(actualCountryRequest);
 
             //Assert
             Assert.Throws<ArgumentException>(actual);
@@ -75,16 +74,15 @@ namespace CRUDTests
         {
             //Arange
             string[] countryNames = ["India", "Chile"];
-            CountriesService countriesService = new();
             List<CountryResponse> responses = new();
 
             //Act
             foreach (var country in countryNames)
             {
-                responses.Add(countriesService.AddCountry(new CountryAddRequest() { Name = country }));
+                responses.Add(_countriesService.AddCountry(new CountryAddRequest() { Name = country }));
             }
 
-            List<CountryResponse> countries = countriesService.GetAllCountries();
+            List<CountryResponse> countries = _countriesService.GetAllCountries();
 
             //Assert
             foreach (var response in responses)
