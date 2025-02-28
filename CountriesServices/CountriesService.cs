@@ -13,13 +13,13 @@ namespace CountriesServices
             _countries = new();
         }
 
-        public CountryResponse AddCountry(CountryRequest countryRequest)
+        public CountryResponse AddCountry(CountryAddRequest countryAddRequest)
         {
-            if (countryRequest == null) throw new ArgumentNullException();
+            if (countryAddRequest == null) throw new ArgumentNullException();
 
-            if (String.IsNullOrEmpty(countryRequest.Name)) throw new ArgumentException();
+            if (String.IsNullOrEmpty(countryAddRequest.Name)) throw new ArgumentException();
 
-            Country country = countryRequest.ToCountry();
+            Country country = countryAddRequest.ToCountry();
 
             if (_countries.Any(c => c.Name == country.Name)) throw new ArgumentException("Country with that name already exist");
 

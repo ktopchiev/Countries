@@ -4,6 +4,6 @@ namespace ServiceContracts
 {
     public interface ICountriesService
     {
-        CountryResponse AddCountry(CountryRequest countryRequest);
+        CountryResponse AddCountry(CountryAddRequest countryAddRequest);
     }
 }

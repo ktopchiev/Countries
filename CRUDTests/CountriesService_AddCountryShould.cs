@@ -9,7 +9,7 @@ namespace CRUDTests
         public void Add_NullCountryRequest_Throw_ArgumentNullException()
         {
             //Arange
-            CountryRequest countryRequest = null;
+            CountryAddRequest countryRequest = null;
             CountriesService countriesService = new CountriesService();
 
             //Act
@@ -23,7 +23,7 @@ namespace CRUDTests
         public void Add_CountryRequestWithNoName_Throw_ArgumentException()
         {
             //Arange
-            CountryRequest countryRequest = new();
+            CountryAddRequest countryRequest = new();
             CountriesService countriesService = new CountriesService();
 
             //Act
@@ -37,8 +37,8 @@ namespace CRUDTests
         public void Add_CountryRequestWithExistingName_Throw_ArgumentException()
         {
             //Arange
-            CountryRequest countryRequest = new() { Name = "Bulgaria" };
-            CountryRequest countryRequest2 = new() { Name = "Bulgaria" };
+            CountryAddRequest countryRequest = new() { Name = "Bulgaria" };
+            CountryAddRequest countryRequest2 = new() { Name = "Bulgaria" };
 
             CountriesService countriesService = new CountriesService();
 
