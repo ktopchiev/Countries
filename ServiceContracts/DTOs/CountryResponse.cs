@@ -6,6 +6,17 @@ namespace ServiceContracts.DTOs
     {
         public Guid CountryId { get; set; }
         public string? Name { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null) return false;
+
+            if (obj == typeof(CountryResponse)) return false;
+
+            CountryResponse response = (CountryResponse)obj;
+
+            return CountryId == response.CountryId && Name == response.Name;
+        }
     }
 
     public static class CountryResponseExtension
