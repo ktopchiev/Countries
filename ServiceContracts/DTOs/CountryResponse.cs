@@ -4,7 +4,7 @@ namespace ServiceContracts.DTOs
 {
     public class CountryResponse
     {
-        public Guid CountryId { get; set; }
+        public Guid? CountryId { get; set; }
         public string? Name { get; set; }
 
         public override bool Equals(object? obj)
@@ -23,6 +23,8 @@ namespace ServiceContracts.DTOs
     {
         public static CountryResponse ToCountryResponse(this Country country)
         {
+            if (country == null) return null;
+
             return new CountryResponse() { CountryId = country.CountryId, Name = country.Name };
         }
     }

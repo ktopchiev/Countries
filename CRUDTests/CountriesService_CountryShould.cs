@@ -1,15 +1,18 @@
 ﻿using CountriesServices;
 using ServiceContracts.DTOs;
+using Xunit.Abstractions;
 
 namespace CRUDTests
 {
     public class CountriesService_CountryShould
     {
         private readonly CountriesService _countriesService;
+        private readonly ITestOutputHelper _output;
 
-        public CountriesService_CountryShould()
+        public CountriesService_CountryShould(ITestOutputHelper output)
         {
             _countriesService = new CountriesService();
+            _output = output;
         }
 
         #region AddCountry
@@ -90,6 +93,35 @@ namespace CRUDTests
                 Assert.Contains(response, countries);
             }
         }
+        #endregion
+
+        #region GetCountryById
+        [Fact]
+        public void GetCountryById_EmtpyGuid_Return_ArgumentException()
+        {
+            //Arrange
+            Guid? countryId = null;
+
+            //Act
+            Func<CountryResponse> action = () => _countriesService.GetCountryById(countryId);
+
+            //Assert
+            Assert.Throws<ArgumentException>(action);
+        }
+
+        [Fact]
+        public void GetCountryById_NonExistingId_Return_KeyNotFoundException()
+        {
+            //Arrange
+            Guid? countryId = Guid.NewGuid();
+
+            //Act
+            Func<CountryResponse> action = () => _countriesService.GetCountryById(countryId);
+
+            //Assert
+            Assert.Throws<KeyNotFoundException>(action);
+        }
+
         #endregion
     }
 }

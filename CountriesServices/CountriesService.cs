@@ -32,5 +32,16 @@ namespace CountriesServices
         {
             return _countries.Select(c => c.ToCountryResponse()).ToList();
         }
+
+        public CountryResponse GetCountryById(Guid? id)
+        {
+            if (id == Guid.Empty || id == null) return null;
+
+            CountryResponse countryResponse = _countries.FirstOrDefault(c => c.CountryId == id).ToCountryResponse();
+
+            if (countryResponse == null) throw new KeyNotFoundException();
+
+            return countryResponse;
+        }
     }
 }
