@@ -17,6 +17,11 @@ namespace ServiceContracts.DTOs
 
             return CountryId == response.CountryId && Name == response.Name;
         }
+
+        public override string ToString()
+        {
+            return $"Country Id: {CountryId}, Name: {Name}";
+        }
     }
 
     public static class CountryResponseExtension

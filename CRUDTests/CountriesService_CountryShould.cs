@@ -25,6 +25,7 @@ namespace CRUDTests
 
             //Act
             CountryResponse countryResponse = _countriesService.AddCountry(countryAddRequest);
+            _output.WriteLine($"Country Response: {countryResponse.ToString()}");
 
             //Assert
             Assert.True(countryResponse.Name == countryName);
